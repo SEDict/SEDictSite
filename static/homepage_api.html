@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="This is a page showing abbreviations and synonyms of software-specific terms.">    
+    <title>Introduction of the usage of our SEdictionary API</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/dist/bootstrap.min.css" rel="stylesheet">
+
+   
+    <style>
+			body {
+				padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+			}
+	  </style>
+  </head>
+
+<body>
+
+  <nav id="myNavbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">SEdictionary</a>
+		</div>
+		
+		<div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+				<li><a href="/api" target="_blank">API</a></li>
+				<li><a href="https://github.com/ccywch/se-dict-browser-extension" target="_blank">Extension</a></li>
+		  </ul>	  
+		</div>
+		
+	</div>
+  </nav>
+    <br/>
+	<br/>
+	
+    <div class="container">
+      <!-- Example row of columns -->
+      
+	  <div class="row">
+	   <h2>SEdictionary API</h2>
+	   <p>This is the documentation of our SEdictionary API. Given a software-specific term, it can return the definition and related words for the term.</p>
+	   <hr>
+	   <br>
+	   <h2>Usage of the API</h2>
+	   <p>This API returns data in json format.</p>
+	   <p>As one abbreviation may represent several full names, so there may be several items in the return file.</p>
+	   <p>For each software-specific term, there are several attributes:</p>
+		 <ul>
+			<li>the normalization name for the term;</li>
+			<li>its Wikipedia link (optional);</li>
+			<li>top relevant words and corresponding Wikipedia links (optinal).</li>
+	   </ul>
+		 <p>Be aware that not all terms have Wikipedia link or relevant words.</p>
+	   <p>For exmaple, you can get the dictionary of "javascript" by querying <a href="/api/javascript">/api/javascript</a>.</p>
+    </div>
+  
+	 
+	 <br/>
+	 <br/>
+	 <br/>	 
+	 
+      <hr>
+
+     <!-- Footer -->
+        <footer>
+            <div class="row">
+                <p>Copyright &copy; Chen Chunyang | 2017 | All Rights Reserved</p>
+            </div>
+            <!-- /.row -->
+        </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="/dist/jquery.min.js"></script>
+	<script src="/dist/bootstrap.min.js"></script>  
+	<script src="/dist/bootbox.js"></script>
+	<script src="/dist/track.js">//Google analytics</script>
+	
+    <script>
+		function writeURL(){
+			 var tech = document.getElementById("content").value;
+			if (tech == null || tech == "") {
+				bootbox.alert("Term name must be filled out");
+				return false;
+			}
+
+			window.location.assign("/term/"+tech);
+			
+		}
+	</script>
+	
+  </body>
+</html>

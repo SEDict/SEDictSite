@@ -1,0 +1,57 @@
+application: se-dictionary
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+
+- url: /
+  static_files: static/homepage.html
+  upload: homepage.html
+
+- url: /api
+  static_files: static/homepage_api.html
+  upload: homepage_api.html  
+
+- url: /sitemap.xml
+  static_files: static/sitemap.xml
+  upload: sitemap.xml 
+
+- url: /sitemap0.xml
+  static_files: static/sitemap0.xml
+  upload: sitemap0.xml
+  
+- url: /sitemap1.xml
+  static_files: static/sitemap1.xml
+  upload: sitemap1.xml
+
+- url: /google3413bf25c03a27c3.html
+  static_files: static/google3413bf25c03a27c3.html
+  upload: google3413bf25c03a27c3.html 
+
+- url: /BingSiteAuth.xml
+  static_files: static/BingSiteAuth.xml
+  upload: BingSiteAuth.xml
+  
+- url: /yandex_8fe86c39e3efb50e.html
+  static_files: static/yandex_8fe86c39e3efb50e.html
+  upload: yandex_8fe86c39e3efb50e.html 
+  
+- url: /fonts
+  static_dir: fonts    
+  
+- url: /dist
+  static_dir: dist
+
+- url: /static
+  static_dir: static  
+  
+- url: /.*
+  script: seDictionary.application
+  
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
