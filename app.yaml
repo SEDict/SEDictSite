@@ -12,34 +12,6 @@ handlers:
   static_files: static/homepage_api.html
   upload: homepage_api.html  
 
-- url: /sitemap.xml
-  static_files: static/sitemap.xml
-  upload: sitemap.xml 
-
-- url: /sitemap0.xml
-  static_files: static/sitemap0.xml
-  upload: sitemap0.xml
-  
-- url: /sitemap1.xml
-  static_files: static/sitemap1.xml
-  upload: sitemap1.xml
-
-- url: /sitemap2.xml
-  static_files: static/sitemap2.xml
-  upload: sitemap2.xml
-
-- url: /sitemap3.xml
-  static_files: static/sitemap3.xml
-  upload: sitemap3.xml
-
-- url: /sitemap4.xml
-  static_files: static/sitemap4.xml
-  upload: sitemap4.xml
-
-- url: /sitemap5.xml
-  static_files: static/sitemap5.xml
-  upload: sitemap5.xml
-
 - url: /google3413bf25c03a27c3.html
   static_files: static/google3413bf25c03a27c3.html
   upload: google3413bf25c03a27c3.html 
