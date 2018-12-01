@@ -16,8 +16,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 f = open("abbreviationSynonym.json")
 synonym_dic = json.loads(f.read())
-f.close()	
-# linshi
+f.close()
 #verify if a term is in our vocabulary
 def isTermInVocab(term):
 	if term in synonym_dic:
