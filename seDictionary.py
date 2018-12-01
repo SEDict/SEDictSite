@@ -33,7 +33,7 @@ def writeTemplate(self, template_values, templateFile):
 
 #get the records of the term from our database	
 def getTermDic(term):
-	
+	print("zdddddddddddddddddddd")
 	f = open("finalDictionaryMoreLink.json")
 	wholeDic_dic = json.loads(f.read())    #get the whole dictionary
 	f.close()
