@@ -33,15 +33,9 @@ class MultiDict:
 
 #TMP
 
-zd=MultiDict("APIdata_",4)
-# with open("APIdata_0.json") as fr:
-# 	zd1=json.loads(fr.read())
-# with open("APIdata_1.json") as fr:
-# 	zd2=json.loads(fr.read())
-# with open("APIdata_2.json") as fr:
-# 	zd3=json.loads(fr.read())
-# with open("APIdata_3.json") as fr:
-# 	zd4=json.loads(fr.read())
+with open("APIdata.json") as fr:
+	zd1=json.loads(fr.read())
+
 #TMP
 f = open("abbreviationSynonym.json")
 synonym_dic = json.loads(f.read())
