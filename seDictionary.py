@@ -46,7 +46,7 @@ def getTermDic(term):
 	# f = open("finalDictionaryMoreLink.json")
 	# wholeDic_dic = json.loads(f.read())    #get the whole dictionary
 	# f.close()
-	wholeDic_dic = MultiDict("finalDictionaryMoreLink_",4)
+	wholeDic_dic = MultiDict("finalDictionaryMoreLink_",2)
 	if term in wholeDic_dic.keys():
 		finding_dic = {"name":term}                           #the normalization style
 		finding_dic["abbreviation"] = wholeDic_dic.get(term)[0]   #the abbreviation/full name of the given term
@@ -113,7 +113,7 @@ class Post_json(webapp2.RequestHandler):
 			# f = open("APIdata.json")
 			# wholeDic_dic = json.loads(f.read())    #get the whole dictionary
 			# f.close()
-			wholeDic_dic = MultiDict("APIdata_",4)
+			wholeDic_dic = MultiDict("APIdata_",2)
 			finding_dic = wholeDic_dic.get(normalization_list[0])
 			finding_dic["name"] = normalization_list
 		self.response.write(json.dumps(finding_dic))		
