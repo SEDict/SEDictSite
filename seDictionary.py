@@ -31,7 +31,10 @@ class MultiDict:
                 if key in di:
                     return di[key]
 
+#TMP
 
+zd=MultiDict("APIdata_",4)
+#TMP
 f = open("abbreviationSynonym.json")
 synonym_dic = json.loads(f.read())
 f.close()
