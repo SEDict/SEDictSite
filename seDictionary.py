@@ -7,12 +7,30 @@ from google.appengine.ext import ndb
 
 import jinja2
 import webapp2
-
-
 JINJA_ENVIRONMENT = jinja2.Environment(
 	loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
 	extensions=['jinja2.ext.autoescape'],
 	autoescape=True)
+class MultiDict:
+    def __init__(self,dict_path,dict_number):
+        self.dict_number=dict_number
+        self.dicts=[]
+        for i in range(dict_number):
+            with open(dict_path+str(i)+".json") as fr:
+                self.dicts.append(json.loads(fr.read()))
+        self.allkeys=[]
+        for di in self.dicts:
+            self.allkeys.extend(di.keys())
+    def keys(self):
+        return self.allkeys
+    def get(self,key):
+        if key not in self.allkeys:
+            return False
+        else:
+            for di in self.dicts:
+                if key in di:
+                    return di[key]
+
 
 f = open("abbreviationSynonym.json")
 synonym_dic = json.loads(f.read())
@@ -23,32 +41,25 @@ def isTermInVocab(term):
 		return synonym_dic[term]   #return a list of its normalization forms
 	else:
 		return False      #no finding the term
-	
-#write the backend data into the html templates
-def writeTemplate(self, template_values, templateFile):
-	template = JINJA_ENVIRONMENT.get_template(templateFile)
-	self.response.write(template.render(template_values))
-
-
 #get the records of the term from our database	
 def getTermDic(term):
-	f = open("finalDictionaryMoreLink.json")
-	wholeDic_dic = json.loads(f.read())    #get the whole dictionary
-	f.close()
-	
-	if term in wholeDic_dic:
+	# f = open("finalDictionaryMoreLink.json")
+	# wholeDic_dic = json.loads(f.read())    #get the whole dictionary
+	# f.close()
+	wholeDic_dic = MultiDict("finalDictionaryMoreLink_",4)
+	if term in wholeDic_dic.keys():
 		finding_dic = {"name":term}                           #the normalization style
-		finding_dic["abbreviation"] = wholeDic_dic[term][0]   #the abbreviation/full name of the given term
-		finding_dic["synonym"] = wholeDic_dic[term][1]       #the synonyms of the given term		
+		finding_dic["abbreviation"] = wholeDic_dic.get(term)[0]   #the abbreviation/full name of the given term
+		finding_dic["synonym"] = wholeDic_dic.get(term)[1]       #the synonyms of the given term
 		finding_dic["relevantWords"] = []
-		for item in wholeDic_dic[term][2]:
+		for item in wholeDic_dic.get(term)[2]:
 			if item in synonym_dic:    #it is in our database
 				finding_dic["relevantWords"].append((item, 1))
 			else:
 				finding_dic["relevantWords"].append((item, 0))
-		finding_dic["wikiLink"] = wholeDic_dic[term][3]          #the wikipedia/tagWiki/github link list for parsing intro
-		finding_dic["relevantLinks"] = wholeDic_dic[term][4]     #the relevant link list
-		metaData =  ", ".join(wholeDic_dic[term][2]).replace("_", " ")
+		finding_dic["wikiLink"] = wholeDic_dic.get(term)[3]          #the wikipedia/tagWiki/github link list for parsing intro
+		finding_dic["relevantLinks"] = wholeDic_dic.get(term)[4]     #the relevant link list
+		metaData =  ", ".join(wholeDic_dic.get(term)[2]).replace("_", " ")
 		return metaData, finding_dic
 	
 #get multiple candidates with its definition
@@ -64,7 +75,12 @@ def getMultipleCandidates(normalization_list):
 		else:               #if no wiki links, still store the empty list
 			termDefine_dic[term] = []
 	return termDefine_dic
-	
+
+#write the backend data into the html templates
+def writeTemplate(self, template_values, templateFile):
+	template = JINJA_ENVIRONMENT.get_template(templateFile)
+	self.response.write(template.render(template_values))
+
 #fill in the template file to show our results		
 class TermDic(webapp2.RequestHandler):
 	def get(self):
@@ -94,10 +110,11 @@ class Post_json(webapp2.RequestHandler):
 		if normalization_list is False:   #the term is not in our database
 			finding_dic = {"name": [term], "wikiLink":[], "relevantWords":[]}
 		else:
-			f = open("APIdata.json")
-			wholeDic_dic = json.loads(f.read())    #get the whole dictionary
-			f.close()
-			finding_dic = wholeDic_dic[normalization_list[0]]
+			# f = open("APIdata.json")
+			# wholeDic_dic = json.loads(f.read())    #get the whole dictionary
+			# f.close()
+			wholeDic_dic = MultiDict("APIdata_",4)
+			finding_dic = wholeDic_dic.get(normalization_list[0])
 			finding_dic["name"] = normalization_list
 		self.response.write(json.dumps(finding_dic))		
 		
