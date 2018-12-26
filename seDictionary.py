@@ -31,12 +31,6 @@ class MultiDict:
                 if key in di:
                     return di[key]
 
-#TMP
-
-with open("APIdata.json") as fr:
-	zd1=json.loads(fr.read())
-
-#TMP
 f = open("abbreviationSynonym.json")
 synonym_dic = json.loads(f.read())
 f.close()
@@ -48,23 +42,23 @@ def isTermInVocab(term):
 		return False      #no finding the term
 #get the records of the term from our database	
 def getTermDic(term):
-	# f = open("finalDictionaryMoreLink.json")
-	# wholeDic_dic = json.loads(f.read())    #get the whole dictionary
-	# f.close()
-	wholeDic_dic = MultiDict("finalDictionaryMoreLink_",2)
-	if term in wholeDic_dic.keys():
+	f = open("finalDictionaryMoreLink.json")
+	wholeDic_dic = json.loads(f.read())    #get the whole dictionary
+	f.close()
+	# wholeDic_dic = MultiDict("finalDictionaryMoreLink_",2)
+	if term in wholeDic_dic:
 		finding_dic = {"name":term}                           #the normalization style
-		finding_dic["abbreviation"] = wholeDic_dic.get(term)[0]   #the abbreviation/full name of the given term
-		finding_dic["synonym"] = wholeDic_dic.get(term)[1]       #the synonyms of the given term
+		finding_dic["abbreviation"] = wholeDic_dic[term][0]   #the abbreviation/full name of the given term
+		finding_dic["synonym"] = wholeDic_dic[term][1]       #the synonyms of the given term
 		finding_dic["relevantWords"] = []
-		for item in wholeDic_dic.get(term)[2]:
+		for item in wholeDic_dic[term][2]:
 			if item in synonym_dic:    #it is in our database
 				finding_dic["relevantWords"].append((item, 1))
 			else:
 				finding_dic["relevantWords"].append((item, 0))
-		finding_dic["wikiLink"] = wholeDic_dic.get(term)[3]          #the wikipedia/tagWiki/github link list for parsing intro
-		finding_dic["relevantLinks"] = wholeDic_dic.get(term)[4]     #the relevant link list
-		metaData =  ", ".join(wholeDic_dic.get(term)[2]).replace("_", " ")
+		finding_dic["wikiLink"] = wholeDic_dic[term][3]          #the wikipedia/tagWiki/github link list for parsing intro
+		finding_dic["relevantLinks"] = wholeDic_dic[term][4]     #the relevant link list
+		metaData =  ", ".join(wholeDic_dic[term][2]).replace("_", " ")
 		return metaData, finding_dic
 	
 #get multiple candidates with its definition
@@ -115,11 +109,11 @@ class Post_json(webapp2.RequestHandler):
 		if normalization_list is False:   #the term is not in our database
 			finding_dic = {"name": [term], "wikiLink":[], "relevantWords":[]}
 		else:
-			# f = open("APIdata.json")
-			# wholeDic_dic = json.loads(f.read())    #get the whole dictionary
-			# f.close()
-			wholeDic_dic = MultiDict("APIdata_",2)
-			finding_dic = wholeDic_dic.get(normalization_list[0])
+			f = open("APIdata.json")
+			wholeDic_dic = json.loads(f.read())    #get the whole dictionary
+			f.close()
+			# wholeDic_dic = MultiDict("APIdata_",2)
+			finding_dic = wholeDic_dic[normalization_list[0]]
 			finding_dic["name"] = normalization_list
 		self.response.write(json.dumps(finding_dic))		
 		
