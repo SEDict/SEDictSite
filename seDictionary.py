@@ -34,6 +34,7 @@ class MultiDict:
 f = open("abbreviationSynonym.json")
 synonym_dic = json.loads(f.read())
 f.close()
+testt = ["ZD1"]
 #verify if a term is in our vocabulary
 def isTermInVocab(term):
 	if term in synonym_dic:
@@ -49,6 +50,11 @@ def getTermDic(term):
 	if term in wholeDic_dic:
 		finding_dic = {"name":term}                           #the normalization style
 		finding_dic["abbreviation"] = wholeDic_dic[term][0]   #the abbreviation/full name of the given term
+
+		global testt
+		finding_dic["abbreviation"].append(testt[0])
+		testt[0]+="O"
+
 		finding_dic["synonym"] = wholeDic_dic[term][1]       #the synonyms of the given term
 		finding_dic["relevantWords"] = []
 		for item in wholeDic_dic[term][2]:
