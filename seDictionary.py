@@ -34,27 +34,27 @@ class MultiDict:
 f = open("abbreviationSynonym.json")
 synonym_dic = json.loads(f.read())
 f.close()
-testt = ["ZD1"]
+f = open("finalDictionaryMoreLink.json")
+wholeDic_dic = json.loads(f.read())
+f.close()
+f = open("definition.json")
+definition_dic = json.loads(f.read())  # get the whole dictionary
+f.close()
 #verify if a term is in our vocabulary
 def isTermInVocab(term):
+	global synonym_dic
 	if term in synonym_dic:
 		return synonym_dic[term]   #return a list of its normalization forms
 	else:
 		return False      #no finding the term
 #get the records of the term from our database	
 def getTermDic(term):
-	f = open("finalDictionaryMoreLink.json")
-	wholeDic_dic = json.loads(f.read())    #get the whole dictionary
-	f.close()
+	global wholeDic_dic
+	global synonym_dic
 	# wholeDic_dic = MultiDict("finalDictionaryMoreLink_",2)
 	if term in wholeDic_dic:
 		finding_dic = {"name":term}                           #the normalization style
 		finding_dic["abbreviation"] = wholeDic_dic[term][0]   #the abbreviation/full name of the given term
-
-		global testt
-		finding_dic["abbreviation"].append(testt[0])
-		testt[0]+="O"
-
 		finding_dic["synonym"] = wholeDic_dic[term][1]       #the synonyms of the given term
 		finding_dic["relevantWords"] = []
 		for item in wholeDic_dic[term][2]:
@@ -69,10 +69,7 @@ def getTermDic(term):
 	
 #get multiple candidates with its definition
 def getMultipleCandidates(normalization_list):
-	f = open("definition.json")
-	definition_dic = json.loads(f.read())    #get the whole dictionary
-	f.close()
-	
+	global definition_dic
 	termDefine_dic = {}       #for each term, store its definition link
 	for term in normalization_list:
 		if term in definition_dic:
