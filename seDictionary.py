@@ -131,10 +131,10 @@ class Post_json(webapp2.RequestHandler):
             finding_dic = {"name": [term], "wikiLink": [], "relevantWords": []}
         else:
             f = open("APIdata.json")
-            wholeDic_dic = json.loads(f.read())  # get the whole dictionary
+            wholeDic_dic_api = json.loads(f.read())  # get the whole dictionary
             f.close()
             # wholeDic_dic = MultiDict("APIdata_",2)
-            finding_dic = wholeDic_dic[normalization_list[0]]
+            finding_dic = wholeDic_dic_api[normalization_list[0]]
             finding_dic["name"] = normalization_list
         self.response.write(json.dumps(finding_dic))
 
